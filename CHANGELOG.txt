@@ -1,0 +1,21 @@
+Atlas Changelog
+
+v0.1.4 (2026-05-07)
+- Added install.sh for quick installation
+- MCP Module Support & Python Wrapper Integration
+- Improved Slash Command Routings
+- Atlas Main Engine Path Fixes
+- Silenced MCP connection timeout errors to improve terminal UX
+
+v0.1.3 (2026-05-01)
+- New --model Command for direct model selection
+- Enhanced Dependency Management
+
+v0.1.2 (2026-04-25)
+- Bug Fixes and Performance Improvements
+- UI Enhancements
+
+v0.1.1 (2026-04-20)
+- Expanded Model Support (Gemini, OpenAI, Anthropic, Groq, Mistral)
+- Enhanced User Experience with prompt_toolkit
+- Better Model Selection Menu

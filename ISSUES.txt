@@ -1,0 +1,15 @@
+Atlas Known Issues & Future Plans
+
+Known Issues:
+1. MCP Connection Timeouts: Some MCP servers (like Burpsuite) may time out if not responsive. 
+   - Status: Silenced in v0.1.4 to avoid traceback clutter.
+2. Dependency Conflicts: Some Python environments might have conflicting library versions (e.g. httpx).
+   - Recommendation: Always use the virtual environment (venv) created by install.sh.
+3. System Binary PATH: If 'atlas' command is not found, check if ~/.local/bin or /usr/local/bin is in your PATH.
+
+Future Plans:
+1. GUI Interface: A web-based or desktop GUI for easier interaction.
+2. More MCP Tools: Expanding the default toolset for more comprehensive pentesting.
+3. Local LLM Integration: Better support for running models entirely offline (Ollama/Llama.cpp).
+4. Report Generation: Automated pentest report generation in PDF/HTML format.
+5. Telegram Bot: Integration with Telegram for remote control.

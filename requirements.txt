@@ -1,0 +1,6 @@
+python-dotenv
+google-genai
+colorama
+prompt_toolkit
+ollamafreeapi
+mcp
