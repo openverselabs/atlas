@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 import warnings
 import logging
 
-# Suppress third-party warnings and noisy logs
 warnings.filterwarnings("ignore", category=UserWarning, module="google.genai")
 os.environ["GRPC_VERBOSITY"] = "ERROR"
 os.environ["GLOG_minloglevel"] = "2"
@@ -18,7 +17,7 @@ os.environ["GLOG_minloglevel"] = "2"
 from google import genai
 from google.genai import types
 from ollamafreeapi import OllamaFreeAPI
-from atlas_mcp import AtlasMCPWrapper
+from .atlas_mcp import AtlasMCPWrapper
 
 try:
     from colorama import init as colorama_init, Fore, Back, Style
@@ -42,7 +41,6 @@ class FileCompleter(Completer):
     def get_completions(self, document: Document, complete_event):
         text = document.text_before_cursor
         
-        # Slash Command completion
         if text.startswith('/'):
             if ' ' in text:
                 # Sub-command completion
@@ -63,14 +61,10 @@ class FileCompleter(Completer):
                     yield Completion(cmd, start_position=-len(cmd_text))
             return
             
-        # Check if we are typing a file path starting with @
         if '@' in text:
-            # Find the last @ position
             at_index = text.rfind('@')
-            # content after @
             path_input = text[at_index+1:]
             
-            # If there is a space after @, we assume it's not a file path anymore unless it's escaped (simplified)
             if ' ' in path_input:
                 return
 
@@ -142,7 +136,6 @@ def get_palette(prompt_type: str = None):
             "reset": Style.RESET_ALL
         }
     
-    # Default (pentest)
     return {
         "accent": Fore.CYAN + Style.BRIGHT,
         "muted": Fore.WHITE + Style.DIM,
@@ -184,7 +177,6 @@ def get_text_input(prompt_text: str) -> str:
 
 
 def ensure_env_file():
-    # Use path relative to this script's directory
     env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
 
     if not os.path.exists(env_path):
@@ -239,7 +231,6 @@ def select_ai_model(prompt_type: str = None, model_override: str = None):
         "mistral-large": ("mistral", os.getenv("MISTRAL_API_KEY"), "mistral-large"),
         "mistral-medium": ("mistral", os.getenv("MISTRAL_API_KEY"), "mistral-medium"),
         "mistral-nemo": ("mistral", os.getenv("MISTRAL_API_KEY"), "mistral-nemo"),
-        # OllamaFreeAPI Models
         "llama3.2:3b": ("ollama", None, "llama3.2:3b"),
         "deepseek-r1:latest": ("ollama", None, "deepseek-r1:latest"),
         "gpt-oss:20b": ("ollama", None, "gpt-oss:20b"),
@@ -256,7 +247,6 @@ def select_ai_model(prompt_type: str = None, model_override: str = None):
         if model_override in direct_model_map:
             return direct_model_map[model_override]
         else:
-            # Check if it's potentially an Ollama model (most start with llama, deepseek, etc.)
             return "ollama", None, model_override
 
     model_choice = os.getenv("STRIX_MODEL_CHOICE")
@@ -277,7 +267,6 @@ def select_ai_model(prompt_type: str = None, model_override: str = None):
             complete_while_typing=True
         ).strip()
     except Exception as e:
-        # Fallback if prompt_toolkit fails
         choice = input(palette["accent"] + f"Enter model name [default: {default_model}]: " + palette["reset"]).strip() or default_model
 
     if not choice:
@@ -289,7 +278,6 @@ def select_ai_model(prompt_type: str = None, model_override: str = None):
     if choice in direct_model_map:
         return direct_model_map[choice]
     else:
-        # If the choice is not empty and not in the map, it's invalid
         if choice and choice != default_model:
             print(palette["error"] + f"\nError: Model '{choice}' not recognized. Falling back to {default_model}." + palette["reset"])
         return direct_model_map[default_model]
@@ -298,7 +286,7 @@ def validate_api_key(ai_type, api_key, prompt_type: str = None):
     palette = get_palette(prompt_type)
 
     if ai_type == "ollama":
-        return True # Ollama is free, no key needed
+        return True
 
     env_key_name = f"{ai_type.upper()}_API_KEY"
     if ai_type == "gemini":
@@ -336,17 +324,12 @@ def initialize_ai(prompt_type: str = None, model_override: str = None):
         ai_type, API_KEY, MODEL = "ollama", None, "llama3.2:3b"
 
     if ai_type == "gemini":
-        # Avoid double warning from google-genai SDK if both keys exist in env
         if os.environ.get("GOOGLE_API_KEY") and os.environ.get("GEMINI_API_KEY"):
             os.environ.pop("GEMINI_API_KEY", None)
             
         try:
             client = genai.Client(api_key=API_KEY)
-            # Simple call to verify key
-            # client.models.generate_content(model=MODEL, contents="Hello")
         except Exception as e:
-             # If validation fails, we might want to catch it.
-             # But for now, let's just return as before.
              pass
         return ai_type, API_KEY, MODEL
     elif ai_type == "openai":
@@ -927,13 +910,12 @@ Rules:
         try:
             client = genai.Client(api_key=API_KEY)
             pentest_tool = define_tools(mcp_wrapper=mcp_wrapper)
-            # Create chat with tools and system instruction
             chat = client.chats.create(
                 model=MODEL,
                 config=types.GenerateContentConfig(
                     tools=[pentest_tool],
                     system_instruction=system_prompt,
-                    temperature=0.7, # Add some creativity
+                    temperature=0.7, 
                 )
             )
         except Exception as e:
@@ -1073,9 +1055,8 @@ Rules:
                         if new_type in SYSTEM_PROMPTS:
                             current_prompt_type = new_type
                             system_prompt = SYSTEM_PROMPTS[new_type]
-                            PALETTE = get_palette(new_type) # Update palette
+                            PALETTE = get_palette(new_type)
                             
-                            # Reload effect: Clear screen and reprint banner
                             os.system('clear' if os.name == 'posix' else 'cls')
                             print(PALETTE["banner_bg"] + PALETTE["accent"])
                             for line in banner_lines:
@@ -1083,7 +1064,6 @@ Rules:
                             print(PALETTE["reset"])
                             print(PALETTE["success"] + f"System prompt & theme switched to: {new_type}" + PALETTE["reset"])
                             
-                            # Update the AI session
                             if ai_type == "gemini":
                                 chat = client.chats.create(
                                     model=MODEL,
@@ -1169,12 +1149,7 @@ Rules:
                                              'advice', 'tutorial', 'guide', 'write', 'buatkan', 'buat',
                                              'what is', 'describe', 'buatkan strategi', 'cara', 'step by step'])
 
-                        # Intercept tool calls if user asked for explanation
                         if is_text_request and function_call.name in ['run_command', 'scan_subdomains', 'scan_ports', 'enum_web']:
-                            # But only if it's the FIRST turn? 
-                            # The original code logic was a bit aggressive. 
-                            # Let's keep it but maybe refine it. 
-                            # Actually, let's keep it as is to preserve behavior.
                             
                             try:
                                 guidance_text = f"Please provide the requested information in text format instead of suggesting commands. User requested: {user_input}"
@@ -1196,7 +1171,6 @@ Rules:
                             continue
 
                         try:
-                            # Execute the tool
                             function_response = call_function(function_call, auto_save, palette=PALETTE, mcp_wrapper=mcp_wrapper)
                             print(PALETTE["command"] + f"\n[OUTPUT]\n{function_response}" + PALETTE["reset"])
 
@@ -1206,8 +1180,6 @@ Rules:
                             loader_thread.start()
                             
                             try:
-                                # Send tool output back to model
-                                # Construct the response part
                                 response_part = types.Part(
                                     function_response=types.FunctionResponse(
                                         name=function_call.name,
@@ -1222,15 +1194,12 @@ Rules:
                             print(PALETTE["error"] + f"\n[FUNCTION ERROR] {call_err}" + PALETTE["reset"])
                             break
                     else:
-                        # Text response
                         final_text = "".join([part.text for part in parts if part.text])
                         if final_text.strip():
-                            # Check for Planning section
                             import re
                             plan_match = re.search(r'<plan>(.*?)</plan>', final_text, re.DOTALL)
                             if plan_match:
                                 plan_content = plan_match.group(1).strip()
-                                # Render plan content
                                 width = get_responsive_width()
                                 print("\n" + PALETTE["muted"] + "┌─ Planning " + "─" * (width - 13) + "┐" + PALETTE["reset"])
                                 for line in plan_content.split('\n'):
@@ -1243,7 +1212,6 @@ Rules:
                                         print(PALETTE["muted"] + "│ " + padded + " │" + PALETTE["reset"])
                                 print(PALETTE["muted"] + "└" + "─" * (width - 2) + "┘" + PALETTE["reset"])
                                 
-                                # Remove plan from final text
                                 final_text = final_text.replace(plan_match.group(0), "").strip()
                                 
                             if final_text.strip():
@@ -1357,7 +1325,6 @@ Rules:
 
                 elif ai_type == "ollama":
                     try:
-                        # Initialize history if not present
                         if 'chat_history' not in globals() and 'chat_history' not in locals():
                             chat_history = [
                                 {"role": "system", "content": system_prompt}
@@ -1373,13 +1340,11 @@ Rules:
                         loader_stopped = False
                         
                         try:
-                            # explicitly set num_predict to 4096 since ollamafreeapi defaults to 128
                             for chunk in client.stream_chat(prompt=user_input, model=MODEL, messages=chat_history, num_predict=4096):
                                 if chunk:
                                     full_response += chunk
 
                         except Exception as stream_err:
-                            # Fallback if streaming fails
                             full_response = client.chat(prompt=user_input, model=MODEL, messages=chat_history, num_predict=4096)
                         
                         if not loader_stopped:
@@ -1390,18 +1355,15 @@ Rules:
                         
                         print("\r" + " " * 30 + "\r", end="", flush=True)
 
-                        # Clean response
                         import re
                         full_response_clean = re.sub(r'<think>.*?</think>', '', full_response, flags=re.DOTALL).strip()
                         
                         chat_history.append({"role": "assistant", "content": full_response_clean})
                         
-                        # Print beautiful formatted bubble
                         if full_response_clean:
                             rendered_ai_response = render_markdown(full_response_clean, PALETTE)
                             print(format_chat_bubble(rendered_ai_response, "Atlas", palette=PALETTE))
                         
-                        # Check for tools in the cleaned response
                         parse_and_execute_tool_from_text(full_response_clean, auto_save)
 
                     except Exception as e:
@@ -1417,7 +1379,6 @@ Rules:
             break
         except Exception as e:
             err_msg = str(e)
-            # Simplify common network/api errors
             if "quota" in err_msg.lower():
                 print(PALETTE["error"] + "\n[Quota Error] API quota exceeded. Please check your billing or usage limits." + PALETTE["reset"])
             elif "invalid" in err_msg.lower() and "key" in err_msg.lower():
