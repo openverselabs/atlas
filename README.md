@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/atlasproject/Atlas">
+  <a href="https://github.com/openverselabs/atlas">
     <img src="https://i.ibb.co.com/chvJ3Cy7/Project-Logo.png" alt="Atlas Logo" >
   </a>
 </p>
@@ -66,7 +66,7 @@
 ### Automated Installation (Recommended)
 
 ```bash
-curl -sSL [https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh](https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh) | bash
+curl -sSL https://raw.githubusercontent.com/openverselabs/atlas/main/install.sh | bash
 
 ```
 
@@ -74,7 +74,7 @@ curl -sSL [https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh]
 
 ```bash
 # Clone the repository
-git clone [https://github.com/atlasproject/Atlas.git](https://github.com/atlasproject/Atlas.git)
+git clone https://github.com/openverselabs/Atlas.git
 cd Atlas
 
 # Setup virtual environment
