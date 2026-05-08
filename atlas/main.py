@@ -900,7 +900,7 @@ Rules:
     current_prompt_type = prompt_type if prompt_type in SYSTEM_PROMPTS else "pentest"
     system_prompt = SYSTEM_PROMPTS[current_prompt_type]
 
-    from atlas_mcp import AtlasMCPWrapper
+    from .atlas_mcp import AtlasMCPWrapper
     config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "mcp_servers.json")
     mcp_wrapper = AtlasMCPWrapper(config_path=config_path)
     if mcp_wrapper.is_available():
