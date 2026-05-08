@@ -3,7 +3,7 @@
 # =================================================================
 # Atlas AI Penetration Testing Assistant - Installation Script
 # =================================================================
-# Usage: curl -sSL https://github.com/atlasproject/Atlas/install.sh | bash
+# Usage: curl -sSL https://github.com/openverselabs/atlas/install.sh | bash
 # =================================================================
 
 set -e
@@ -78,7 +78,7 @@ if [ -d "$INSTALL_DIR" ]; then
     fi
 else
     echo -e "${YELLOW}[*] Cloning Atlas repository to $INSTALL_DIR...${NC}"
-    git clone https://github.com/atlasproject/Atlas.git "$INSTALL_DIR"
+    git clone https://github.com/openverselabs/atlas.git "$INSTALL_DIR"
     cd "$INSTALL_DIR"
 fi
 
