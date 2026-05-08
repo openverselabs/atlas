@@ -6,13 +6,15 @@ setup(
     packages=find_packages(),
     install_requires=[
         "python-dotenv",
-        "google-genai",  # New Google GenAI SDK
+        "google-genai",
         "colorama",
         "prompt_toolkit",
         "openai",
         "anthropic",
         "groq",
         "mistralai",
+        "ollamafreeapi",
+        "mcp",
     ],
     extras_require={
         "dev": ["pytest", "black", "flake8"],
