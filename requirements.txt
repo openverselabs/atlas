@@ -2,5 +2,9 @@ python-dotenv
 google-genai
 colorama
 prompt_toolkit
+openai
+anthropic
+groq
+mistralai
 ollamafreeapi
 mcp
