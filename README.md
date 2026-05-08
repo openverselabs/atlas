@@ -1,239 +1,190 @@
-# Atlas v0.1.4
+<p align="center">
+  <a href="https://github.com/atlasproject/Atlas">
+    <img src="https://i.ibb.co.com/chvJ3Cy7/Project-Logo.png" alt="Atlas Logo" >
+  </a>
+</p>
+
+<h1 align="center">Atlas v0.1.4</h1>
+
+<p align="center">
+  <strong>A professional AI-powered command-line assistant for penetration testing and vulnerability research.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
+  <img src="https://img.shields.io/badge/Version-0.1.4-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Python-3.9+-brightgreen.svg" alt="Python">
+  <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS-lightgrey.svg" alt="Platform">
+</p>
+
+---
 
 > [!IMPORTANT]
-> **Migration Note**: This project was originally known as [Strix](https://github.com/strixproject/Strix). It has been migrated and renamed to **Atlas** due to naming/copyright considerations. The original repository is now deprecated in favor of this one.
+> **Migration Note**: This project was originally known as [Strix](https://github.com/strixproject/Strix). It has been migrated and renamed to **Atlas** due to naming and copyright considerations. The original repository is now deprecated in favor of this one.
 
-Atlas is a command-line penetration testing assistant powered by AI. It integrates with various AI models to help cybersecurity professionals and enthusiasts with technical tasks, while maintaining strict security controls to prevent unintended actions.
+## Table of Contents
+- [Core Features](#core-features)
+- [Release History](#release-history)
+- [Installation](#installation)
+- [Environment Configuration](#environment-configuration)
+- [Usage and Commands](#usage-and-commands)
+- [System Prompts and Personas](#system-prompts-and-personas)
+- [Supported AI Models](#supported-ai-models)
+- [Roadmap](#roadmap)
+- [Disclaimer](#disclaimer)
+- [License and Contributions](#license-and-contributions)
 
-## Features
+---
 
-- **Multi-AI Support**: Works with Google Gemini, OpenAI GPT-4, Anthropic Claude, Groq LLaMA 3, and Mistral (default).
-- **Zero-Config Fallback**: Instantly get access to free open-source models like `deepseek-r1:latest` directly if you don't have API keys.
-- **MCP Tool Connections**: Built-in dynamic integration for Model Context Protocol APIs (such as Burpsuite) using Server-Sent Events (SSE) and Stdio channels.
-- **Slash Commands Autocomplete**: Quick execution via CLI dropdown routes (e.g. `/mcp`, `/help`)
-- **Expanded Model Selection**: Access to multiple models from each provider (e.g., gemini-2.5-flash, gpt-4o, claude-3-opus, etc.)
-- **Interactive Mode**: Real-time conversation interface with the AI assistant
-- **Confirmation Prompts**: Asks for confirmation before executing dangerous commands
+## Core Features
 
-## What's New in v0.1.4
+*   **Multi-AI Provider Support**: Native integration with Google Gemini, OpenAI, Anthropic Claude, Groq, and Mistral.
+*   **Zero-Config Fallback**: Instant access to open-source models like `deepseek-r1:latest` via OllamaFreeAPI for users without personal API keys.
+*   **Model Context Protocol (MCP)**: Built-in dynamic integration for MCP APIs (such as Burp Suite) using Server-Sent Events (SSE) and Stdio channels.
+*   **Slash Command Interface**: Interactive CLI with autocomplete for quick tool execution and system navigation (e.g., `/mcp`, `/help`).
+*   **Interactive Conversation**: A real-time terminal interface optimized for technical dialogue and code generation.
+*   **Safety Controls**: Mandatory confirmation prompts before the execution of potentially hazardous system commands.
 
-- **MCP Module Support & Python Wrapper Integration**: Control arbitrary endpoints such as Burpsuite entirely through `mcp_servers.json` configuration blocks natively.
-- **Improved Slash Command Routings**: Execute tool lookups instantly while writing your payload in terminal.
-- **Atlas Main Engine Path Fixes**: All backend references use explicit system directory targeting (improving stability).
+---
 
-## What's New in v0.1.3
+## Release History
 
-- **New --model Command**: Direct model selection from command line
-  - Specify exact models: `atlas --model gpt-4`, `atlas --model gemini-2.5-flash`, etc.
-  - Use provider names: `atlas --model openai`, `atlas --model groq`, etc.
-  - Combine with other options: `atlas --model gpt-4 --prompt ctf --auto-save`
-- **Enhanced Dependency Management**: All AI provider packages now included in installation
+### v0.1.4
+*   **MCP Module Support**: Full control of arbitrary endpoints like Burp Suite via `mcp_servers.json` configuration.
+*   **Python Wrapper Integration**: Enhanced stability for executing modular Python scripts.
+*   **Path Optimization**: Backend references now utilize explicit system directory targeting to prevent execution errors.
 
-## What's New in v0.1.2
+### v0.1.3
+*   **Direct Model Selection**: Introduced the `--model` flag for granular control.
+*   **Provider Aliases**: Support for calling providers directly (e.g., `atlas --model groq`).
+*   **Dependency Management**: Inclusion of all AI provider SDKs within the base installation.
 
-- **Bug Fixes**: Resolved several stability issues and bugs from previous version
-- **Performance Improvements**: Enhanced response times and overall application performance
-- **UI Enhancements**: Minor user interface improvements for better user experience
-
-## What's New in v0.1.1
-
-- **Expanded Model Support**: Added support for multiple models from each AI provider
-  - **Google Gemini**: gemini-2.5-flash, gemini-2.0-flash, gemini-1.5-pro, gemini-1.5-pro-exp, gemini-1.0-pro
-  - **OpenAI**: gpt-4, gpt-4-turbo, gpt-4o, gpt-3.5-turbo
-  - **Anthropic**: claude-3-sonnet, claude-3-opus, claude-3-haiku, claude-2.1
-  - **Groq**: llama3-70b-8192, llama-3.1-8b, llama-3.1-70b, mixtral-8x7b, gemma-7b
-  - **Mistral**: mistral-small-latest, mistral-large, mistral-medium, mistral-nemo
-- **Enhanced User Experience**: Improved input handling using prompt_toolkit with better formatting and interaction
-- **Better Model Selection Menu**: Organized and expanded model selection interface
+---
 
 ## Installation
 
-### Quick Install (Recommended)
+### Automated Installation (Recommended)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh | bash
+curl -sSL [https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh](https://raw.githubusercontent.com/atlasproject/Atlas/main/install.sh) | bash
+
 ```
 
 ### Manual Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/atlasproject/Atlas.git
+git clone [https://github.com/atlasproject/Atlas.git](https://github.com/atlasproject/Atlas.git)
 cd Atlas
 
-# Option 1: Install in virtual environment (recommended)
+# Setup virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install package in editable mode
 pip install -e .
 
-# Option 2: Install globally/local (without virtual environment)
-pip install -e .
-```
-
-# If the binary is in ~/.local/share/pipx/venvs/atlas/bin/atlas
+# Optional: Link binary for global access
 sudo ln -sf ~/.local/share/pipx/venvs/atlas/bin/atlas /usr/local/bin/atlas
 
-# Set up API keys
-# Create ~/Atlas/.env with your API keys:
-# GOOGLE_API_KEY=your_google_api_key_here
-# OPENAI_API_KEY=your_openai_api_key_here
-# ANTHROPIC_API_KEY=your_anthropic_api_key_here
-# GROQ_API_KEY=your_groq_api_key_here
-# MISTRAL_API_KEY=your_mistral_api_key_here
 ```
 
-## Usage
+---
+
+## Environment Configuration
+
+Create a `.env` file in the application directory to store your API keys:
+
+```env
+GOOGLE_API_KEY=your_key
+OPENAI_API_KEY=your_key
+ANTHROPIC_API_KEY=your_key
+GROQ_API_KEY=your_key
+MISTRAL_API_KEY=your_key
+
+```
+
+---
+
+## Usage and Commands
+
+| Flag | Description |
+| --- | --- |
+| `atlas` | Launch the interactive assistant |
+| `--auto-save` | Bypass confirmation prompts for file operations |
+| `--prompt [type]` | Select a system persona: `pentest`, `ctf`, or `vuln-research` |
+| `--model [name]` | Specify a model (e.g., `gpt-4o`, `gemini-2.0-flash`) |
+| `--help` | Display all available command-line options |
+
+### Example Execution
 
 ```bash
-# Start interactive mode
-atlas
+atlas --model gpt-4o --prompt ctf --auto-save
 
-# Start with auto-save mode (bypass confirmation prompts)
-atlas --auto-save
-
-# Start with a specific system prompt
-atlas --prompt ctf
-atlas --prompt vuln-research
-
-# Start with a specific AI model (new in v0.1.3)
-atlas --model gpt-4
-atlas --model gemini-2.5-flash
-atlas --model claude-3-sonnet
-atlas --model llama3-70b-8192
-atlas --model mistral-large
-
-# You can also specify provider names (uses default model for that provider)
-atlas --model openai      # Uses gpt-4 by default
-atlas --model gemini      # Uses gemini-2.5-flash by default
-atlas --model anthropic   # Uses claude-3-sonnet by default
-atlas --model groq        # Uses llama3-70b-8192 by default
-atlas --model mistral     # Uses mistral-small-latest by default
-
-# Combine with other options
-atlas --model gpt-4 --prompt ctf --auto-save
-
-# Show help
-atlas --help
 ```
 
-## System Prompts
+---
 
-Atlas comes with three built-in system prompts that can be selected using the `--prompt` option:
+## System Prompts and Personas
 
 ### Pentesting Assistant (Default)
 
-```bash
-atlas --prompt pentest
-```
+**Focus**: Efficiency and Technical Accuracy.
 
-```
-Rules:
-1. NEVER save scan results to a file automatically.
-2. ONLY save to a file if the user explicitly asks (e.g., "save to file.txt" or "write this to output.txt").
-3. When scanning (subdomains, ports, web), show output in the terminal only.
-4. If the user provides a list and says "save to X", use 'write_file' with that content.
-5. Be precise, technical, and do not hallucinate actions.
-6. Match the user's language.
-7. Use markdown: **bold**, *italic*, * lists.
-8. You can create any script according to user requests, and can save the script via the save file function.
-```
+* Never saves results to files unless explicitly instructed.
+* Displays scanning output directly in the terminal.
+* Utilizes the `write_file` function only upon direct user request.
 
 ### CTF Assistant
 
-```bash
-atlas --prompt ctf
-```
+**Focus**: Education and Methodology.
 
-```
-Rules:
-1. Help users solve CTF challenges ethically and educationally.
-2. Break down complex problems into understandable steps.
-3. Explain methodologies and reasoning clearly.
-4. Suggest multiple approaches when applicable.
-5. Point out common pitfalls and how to avoid them.
-6. Encourage learning and understanding over quick solutions.
-7. Respect challenge categories (crypto, forensics, web, etc.).
-```
+* Breaks down complex challenges into logical steps.
+* Explains underlying reasoning and methodologies.
+* Suggests multiple attack vectors to encourage learning.
 
 ### Vulnerability Researcher
 
-```bash
-atlas --prompt vuln-research
-```
+**Focus**: Analysis and Responsible Disclosure.
 
-```
-Rules:
-1. Assist with vulnerability analysis and research methodologies.
-2. NEVER exploit vulnerabilities in real systems without authorization.
-3. Explain vulnerability concepts with practical examples.
-4. Guide users through secure coding practices.
-5. Help with CVE analysis and PoC development in controlled environments.
-6. Provide guidance on responsible disclosure procedures.
-7. Detail attack vectors and mitigation strategies.
-8. Emphasize ethical considerations in all recommendations.
-```
+* Assists in CVE analysis and Proof of Concept (PoC) development.
+* Guides users through secure coding practices and mitigation strategies.
+
+---
 
 ## Supported AI Models
 
-### Google Gemini
+* **Google Gemini**: gemini-2.5-flash, gemini-2.0-flash, gemini-1.5-pro
+* **OpenAI**: gpt-4o, gpt-4-turbo, gpt-3.5-turbo
+* **Anthropic**: claude-3-opus, claude-3-sonnet, claude-3-haiku
+* **Groq / Mistral**: llama-3.1-70b, mixtral-8x7b, mistral-large
+* **Ollama (Local)**: deepseek-r1:latest, llama3.2:3b
 
-- gemini-2.5-flash (default)
-- gemini-2.0-flash
-- gemini-1.5-pro
-- gemini-1.5-pro-exp
-- gemini-1.0-pro
+---
 
-### OpenAI
+## Roadmap
 
-- gpt-4
-- gpt-4-turbo
-- gpt-4o
-- gpt-3.5-turbo
+* [ ] **Metasploit Integration**: Direct RPC connection to MSF sessions.
+* [ ] **Report Generation**: Exporting terminal sessions into structured PDF/Markdown reports.
+* [ ] **Local RAG**: Ability to "read" local security documentation or PDF notes for context.
+* [ ] **Web UI**: Optional lightweight local dashboard for visual scan management.
 
-### Anthropic Claude
+---
 
-- claude-3-sonnet
-- claude-3-opus
-- claude-3-haiku
-- claude-2.1
+## Disclaimer
 
-### Groq
+> [!CAUTION]
+> This tool is intended for **educational purposes** and **authorized security testing** only. The author is not responsible for any misuse or damage caused by this application. Users are strictly responsible for complying with all local, state, and federal laws regarding cybersecurity and privacy. Unauthorized access to systems is illegal.
 
-- llama3-70b-8192
-- llama-3.1-8b
-- llama-3.1-70b
-- mixtral-8x7b
-- gemma-7b
+---
 
-### Mistral
+## Star History
 
-- mistral-small-latest
-- mistral-large
-- mistral-medium
-- mistral-nemo
+---
 
-### OllamaFreeAPI (Free, Zero-Config)
+## License and Contributions
 
-Powered by community distributed nodes, allowing users to use open-source LLMs out-of-the-box simply via `atlas --model ollama`.
+* **License**: Distributed under the MIT License.
+* **Contributing**: Pull requests are welcome. For major changes, please open an issue first to discuss the proposed updates.
 
-- deepseek-r1:latest (Powerful reasoning capabilities)
-- llama3.2:3b
-- mistral:latest
-- gpt-oss:20b
-
-## Required Tools
-
-For full functionality, install these security tools:
-
-- subfinder
-- nmap
-- gobuster
-  Or you can use your local tools that are already installed.
-
-## License
-
-MIT License - see LICENSE file for details.
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+---
