@@ -60,7 +60,7 @@ if [ -d "$INSTALL_DIR" ]; then
     if [ "$INSTALL_DIR" != "$(pwd)" ]; then
         echo -e "${YELLOW}[!] Directory $INSTALL_DIR already exists.${NC}"
         printf "${CYAN}[?] Do you want to update the existing installation? (y/n): ${NC}"
-        read -r choice
+        read -r choice < /dev/tty
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             echo -e "${YELLOW}[*] Updating Atlas in $INSTALL_DIR...${NC}"
             cd "$INSTALL_DIR"
@@ -112,7 +112,7 @@ else
 
     echo -e "${YELLOW}[!] /usr/local/bin is not writable without sudo.${NC}"
     printf "${CYAN}[?] Do you want to use sudo to create/fix the symlink? (y/n): ${NC}"
-    read -r sudo_choice
+    read -r sudo_choice < /dev/tty
     if [[ "$sudo_choice" =~ ^[Yy]$ ]]; then
         sudo ln -sf "$ATLAS_BIN" "$DEST_BIN"
         echo -e "${GREEN}[+] Symlink created/updated at $DEST_BIN${NC}"
@@ -143,10 +143,10 @@ fi
 # Optional: Ask for API key immediately
 if [ -f ".env" ] && grep -q "GOOGLE_API_KEY=$" .env; then
     printf "${CYAN}[?] Would you like to enter a Google API Key now? (y/n): ${NC}"
-    read -r key_choice
+    read -r key_choice < /dev/tty
     if [[ "$key_choice" =~ ^[Yy]$ ]]; then
         printf "${CYAN}[>] Enter your Google API Key: ${NC}"
-        read -r api_key
+        read -r api_key < /dev/tty
         if [ -n "$api_key" ]; then
             sed -i "s/GOOGLE_API_KEY=/GOOGLE_API_KEY=$api_key/" .env
             echo -e "${GREEN}[+] API Key saved.${NC}"
