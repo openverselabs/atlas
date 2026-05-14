@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/openverselabs/atlas">
-    <img src="https://i.ibb.co.com/chvJ3Cy7/Project-Logo.png" alt="Atlas Logo" >
+    <img src="https://i.ibb.co.com/hJpqPycB/atlas.png" alt="Atlas Logo" >
   </a>
 </p>
 
@@ -175,10 +175,6 @@ atlas --model gpt-4o --prompt ctf --auto-save
 
 > [!CAUTION]
 > This tool is intended for **educational purposes** and **authorized security testing** only. The author is not responsible for any misuse or damage caused by this application. Users are strictly responsible for complying with all local, state, and federal laws regarding cybersecurity and privacy. Unauthorized access to systems is illegal.
-
----
-
-## Star History
 
 ---
 
